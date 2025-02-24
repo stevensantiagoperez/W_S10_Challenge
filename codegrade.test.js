@@ -5,8 +5,9 @@ import '@testing-library/jest-dom'
 import { Provider } from 'react-redux'
 import server from './backend/pizza-router-mock'
 import { reset } from './backend/helpers'
-import { resetStore } from './frontend/state/store'
+import { resetStore } from './frontend/state/store' // This should be correct based on your file structure
 import App from './frontend/components/App'
+
 
 jest.setTimeout(1500)
 const waitForOptions = { timeout: 250 }
@@ -15,6 +16,7 @@ const queryOptions = { exact: false }
 beforeAll(() => { server.listen() })
 afterAll(() => { server.close() })
 beforeEach(() => {
+  console.log(resetStore) // Check if it's a function
   render(<Provider store={resetStore()}><App /></Provider>)
 })
 afterEach(() => {
