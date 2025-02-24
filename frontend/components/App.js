@@ -4,7 +4,7 @@ import OrderList from './OrderList'
 
 export default function App() {
   return (
-    <div id="app">
+    <div className='App'>
       <PizzaForm />
       <OrderList />
     </div>
