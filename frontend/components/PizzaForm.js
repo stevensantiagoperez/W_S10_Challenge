@@ -1,65 +1,80 @@
-import React from 'react'
+import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { setFullName, setSize, toggleTopping } from '../state/slices/formSlice';
+import { submitOrder } from '../state/slices/formSlice';
 
-const initialFormState = { // suggested
-  fullName: '',
-  size: '',
-  '1': false,
-  '2': false,
-  '3': false,
-  '4': false,
-  '5': false,
-}
+const toppingsList = [
+  { id: '1', name: 'Pepperoni', testId: 'checkPepperoni' },
+  { id: '2', name: 'Green Peppers', testId: 'checkgreenpeppers' },
+  { id: '3', name: 'Pineapple', testId: 'checkPineapple' },
+  { id: '4', name: 'Mushrooms', testId: 'checkMushrooms' },
+  { id: '5', name: 'Ham', testId: 'checkHam' }
+];
 
-export default function PizzaForm() {
+console.log('Green Peppers test ID:', toppingsList[1].testId);
+
+const PizzaForm = () => {
+  const dispatch = useDispatch();
+  const { fullName, size, toppings, isSubmitting, error } = useSelector(state => state.form);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    dispatch(submitOrder());
+  };
+
   return (
-    <form>
-      <h2>Pizza Form</h2>
-      {true && <div className='pending'>Order in progress...</div>}
-      {true && <div className='failure'>Order failed: fullName is required</div>}
-
-      <div className="input-group">
-        <div>
-          <label htmlFor="fullName">Full Name</label><br />
-          <input
-            data-testid="fullNameInput"
-            id="fullName"
-            name="fullName"
-            placeholder="Type full name"
-            type="text"
-          />
-        </div>
+    <form onSubmit={handleSubmit}>
+      <h2>Create Your Pizza</h2>
+      {error && <div className="error">{error}</div>}
+      {isSubmitting && <div>Order in progress...</div>}
+      <div>
+        <label htmlFor="fullName">Full Name:</label>
+        <input
+          type="text"
+          id="fullName"
+          data-testid="fullNameInput"
+          value={fullName}
+          onChange={(e) => dispatch(setFullName(e.target.value))}
+        />
       </div>
-
-      <div className="input-group">
-        <div>
-          <label htmlFor="size">Size</label><br />
-          <select data-testid="sizeSelect" id="size" name="size">
-            <option value="">----Choose size----</option>
-            <option value="S">Small</option>
-            <option value="M">Medium</option>
-            <option value="L">Large</option>
-          </select>
-        </div>
+      <div>
+        <label htmlFor="size">Size:</label>
+        <select
+          id="size"
+          data-testid="sizeSelect"
+          value={size}
+          onChange={(e) => dispatch(setSize(e.target.value))}
+        >
+          <option value="">Choose a size</option>
+          <option value="S">Small</option>
+          <option value="M">Medium</option>
+          <option value="L">Large</option>
+        </select>
       </div>
-
-      <div className="input-group">
-        <label>
-          <input data-testid="checkPepperoni" name="1" type="checkbox" />
-          Pepperoni<br /></label>
-        <label>
-          <input data-testid="checkGreenpeppers" name="2" type="checkbox" />
-          Green Peppers<br /></label>
-        <label>
-          <input data-testid="checkPineapple" name="3" type="checkbox" />
-          Pineapple<br /></label>
-        <label>
-          <input data-testid="checkMushrooms" name="4" type="checkbox" />
-          Mushrooms<br /></label>
-        <label>
-          <input data-testid="checkHam" name="5" type="checkbox" />
-          Ham<br /></label>
+      <div>
+        <p>Toppings:</p>
+        {toppingsList.map(topping => (
+  <div key={topping.id}>
+    <input
+      type="checkbox"
+      data-testid={topping.testId} // ONLY THIS ONE SHOULD EXIST
+      id={`topping-${topping.id}`}
+      checked={toppings.includes(topping.id)}
+      onChange={() => dispatch(toggleTopping(topping.id))}
+    />
+    <label htmlFor={`topping-${topping.id}`}>{topping.name}</label>
+  </div>
+))}
       </div>
-      <input data-testid="submit" type="submit" />
+      <button
+        type="submit"
+        data-testid="submit"
+        disabled={isSubmitting}
+      >
+        Submit Order
+      </button>
     </form>
-  )
-}
+  );
+};
+
+export default PizzaForm;
