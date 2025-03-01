@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchOrders } from '../state/slices/ordersSlice';
@@ -59,3 +60,31 @@ if (error) return <div>Error loading orders: {error}</div>;
 };
 
 export default OrderList;
+=======
+import React from "react";
+import { useSelector } from "react-redux";
+import OrderItem from "./OrderItem";
+import FilterButtons from "./FilterButtons";
+
+function OrderList() {
+  const orders = useSelector((state) => state.orders);
+  const filter = useSelector((state) => state.filter);
+
+  const filteredOrders = filter === "All"
+    ? orders
+    : orders.filter(order => order.size === filter);
+
+  return (
+    <div>
+      <FilterButtons />
+      {filteredOrders.length ? (
+        filteredOrders.map((order, index) => <OrderItem key={index} order={order} />)
+      ) : (
+        <p>No orders yet.</p>
+      )}
+    </div>
+  );
+}
+
+export default OrderList;
+>>>>>>> 9bc8fd3b8337318cd1127ddf5f2aee2aada96bd5

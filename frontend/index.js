@@ -11,4 +11,8 @@ root.render(
   <Provider store={store}>
     <App />
   </Provider>
+<<<<<<< HEAD
 );
+=======
+);
+>>>>>>> 9bc8fd3b8337318cd1127ddf5f2aee2aada96bd5
