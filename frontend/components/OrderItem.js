@@ -1,10 +1,14 @@
-import React from "react";
+import React from 'react';
 
 function OrderItem({ order }) {
   return (
-    <p>
-      {order.fullName} ordered a size {order.size} with {order.toppings.length} toppings
-    </p>
+    <div>
+      <p>
+        {order.fullName} ordered a size {order.size} with{' '}
+        {order.toppings.length || 'no'} topping
+        {order.toppings.length !== 1 ? 's' : ''}
+      </p>
+    </div>
   );
 }
 

@@ -1,10 +1,9 @@
-
 import { configureStore } from '@reduxjs/toolkit';
 import ordersReducer from './slices/ordersSlice';
 import sizeFilterReducer from './slices/sizeFilterSlice';
 import formReducer from './slices/formSlice';
 
-// Create a fresh store instance function
+// Single store configuration
 const createStore = () => configureStore({
   reducer: {
     orders: ordersReducer,
@@ -13,19 +12,6 @@ const createStore = () => configureStore({
   },
 });
 
-// Export the store instance and reset function
+// Export functions
 export const resetStore = () => createStore();
-export default createStore();
-import { configureStore } from "@reduxjs/toolkit";
-import orderReducer from "./orderSlice";
-import filterReducer from "./filterSlice";
-
-const store = configureStore({
-  reducer: {
-    orders: orderReducer,
-    filter: filterReducer,
-  },
-});
-
-export default store;
-
+export default createStore(); 

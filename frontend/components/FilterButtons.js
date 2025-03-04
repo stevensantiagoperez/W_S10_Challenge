@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { setSizeFilter } from "../state/filterSlice"; // ✅ FIXED: Correct import path
+import { setSizeFilter } from "../state/slices/sizeFilterSlice"; 
 
 function FilterButtons() {
   const dispatch = useDispatch();

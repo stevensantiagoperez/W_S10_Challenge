@@ -16,7 +16,6 @@ const queryOptions = { exact: false }
 beforeAll(() => { server.listen() })
 afterAll(() => { server.close() })
 beforeEach(() => {
-  console.log(resetStore) // Check if it's a function
   render(<Provider store={resetStore()}><App /></Provider>)
 })
 afterEach(() => {
