@@ -17,7 +17,17 @@ const PizzaForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(submitOrder());
+    
+    const newOrder = {
+      id: Date.now(), // Unique ID
+      fullName, // From state
+      size,
+      toppings
+    };
+  
+    console.log("Submitting order:", newOrder); // Debugging log
+    
+    dispatch(submitOrder(newOrder)); // Pass order data to Redux
   };
 
   return (

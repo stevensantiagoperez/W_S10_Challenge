@@ -1,12 +1,13 @@
 import React from 'react';
 
 function OrderItem({ order }) {
+  const toppingCount = Array.isArray(order.toppings) ? order.toppings.length : 0; // ✅ Handle missing toppings safely
+
   return (
-    <div>
+    <div data-testid={`order-${order.id}`}>
       <p>
-        {order.fullName} ordered a size {order.size} with{' '}
-        {order.toppings.length || 'no'} topping
-        {order.toppings.length !== 1 ? 's' : ''}
+        {order.customer} ordered a size {order.size} with{' '}
+        {toppingCount > 0 ? `${toppingCount} topping${toppingCount !== 1 ? 's' : ''}` : 'no toppings'}
       </p>
     </div>
   );
